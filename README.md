@@ -44,19 +44,23 @@ The platform automates key processes such as *scheduling, **GPS tracking, **noti
 
 ## 🧩 Detailed Task Distribution
 
-### 🖥️ Frontend Developer 1: Dashboard & User Interface — Vanessa Fazzio
+### 👨‍💻 Frontend Developer 1B: Logic & Integration - Vanessa Fazzio
 
-*Main Focus:* Design and build the main user interface.  
-*Tasks:*
-- Build React pages:
-  - Dashboard (overview of bins, schedules, etc.)
-  - Waste collection form or table  
-  - Recycling tracking page  
-- Integrate with backend APIs (fetch & display data).  
-- Implement authentication (login/register).  
-- Collaborate with designer for UI consistency (via Figma).  
+Main focus: Data handling and user authentication
 
-✅ *End Deliverable:* A functional and responsive interface connected to the backend.
+Tasks:
+	•	Handle user authentication:
+	•	Login & Register pages (with JWT or tokens)
+	•	Secure routes (protect dashboard after login)
+	•	Integrate backend APIs:
+	•	Fetch and display data (bins, schedules, recycling records)
+	•	Handle loading, error, and success states.
+	•	Implement form submissions (waste collection, recycling updates).
+	•	Connect all UI components from 1A to real backend data.
+	•	Test and debug API connections.
+
+✅ Deliverable: Fully functional interface that fetches real data, handles authentication, and connects UI to backend.
+
 
 ---
 
@@ -73,6 +77,26 @@ The platform automates key processes such as *scheduling, **GPS tracking, **noti
 ✅ *End Deliverable:* Interactive, real-time user features such as maps and alerts.
 
 ---
+
+### 👩‍💻 Frontend Developer 1A: UI & Layouts - Josiah Brown
+
+Main focus: Visual design and page structure
+
+Tasks:
+	•	Set up the project structure (React app, routing, folder organization).
+	•	Build the static UI components:
+	•	Dashboard layout (sidebar, navbar, cards)
+	•	Waste collection table/form (structure + design)
+	•	Recycling tracking page (UI only)
+	•	Apply styling & responsiveness (CSS frameworks like Tailwind, Bootstrap, or custom CSS).
+	•	Ensure design matches Figma/UI guidelines.
+	•	Implement reusable components (buttons, modals, forms).
+
+✅ Deliverable: Well-styled, responsive UI with consistent layouts and components (no backend connection yet).
+
+
+
+
 
 ### 🧩 Backend Developer 1: Core System & Database — Randy Wanyoike
 
