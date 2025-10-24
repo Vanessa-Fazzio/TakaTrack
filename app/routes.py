@@ -18,6 +18,7 @@ recycles_schema = RecyclingSchema(many=True)
 
 @main.route("/api/register", methods=["POST"])
 def register_user():
+    """Register a new user"""
     data = request.get_json()
 
     if not data.get("email") or not data.get("password"):
@@ -43,9 +44,9 @@ def register_user():
         "user": user_schema.dump(new_user)
     }), 201
 
-
 @main.route("/api/login", methods=["POST"])
 def login_user():
+    """Authenticate user and return JWT"""
     data = request.get_json()
     email = data.get("email")
     password = data.get("password")
@@ -66,13 +67,13 @@ def login_user():
 @main.route('/api/users', methods=['POST'])
 @jwt_required()
 def add_user():
-    current_user_id = get_jwt_identity()
+    """Add a new user (protected)"""
     data = request.get_json()
-
     new_user = User(
         name=data['name'],
         email=data['email'],
-        role=data.get('role', 'resident')
+        role=data.get('role', 'resident'),
+        password=generate_password_hash(data.get('password', 'default123'))
     )
     db.session.add(new_user)
     db.session.commit()
@@ -81,12 +82,14 @@ def add_user():
 @main.route('/api/users', methods=['GET'])
 @jwt_required()
 def get_users():
+    """Get all users (protected)"""
     users = User.query.all()
     return users_schema.jsonify(users)
 
 @main.route('/api/users/<int:id>', methods=['PUT'])
 @jwt_required()
 def update_user(id):
+    """Update a user (protected)"""
     user = User.query.get_or_404(id)
     data = request.get_json()
 
@@ -100,6 +103,7 @@ def update_user(id):
 @main.route('/api/users/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_user(id):
+    """Delete a user (protected)"""
     user = User.query.get_or_404(id)
     db.session.delete(user)
     db.session.commit()
@@ -113,7 +117,6 @@ def add_bin():
     db.session.add(new_bin)
     db.session.commit()
     return bin_schema.jsonify(new_bin), 201
-
 
 @main.route('/api/bins', methods=['GET'])
 @jwt_required()
