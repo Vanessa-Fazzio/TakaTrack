@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import './MapsAndNotifications.css';
 
-// 🎯 Custom icons based on bin status
+//Custom icons based on bin status
 const redIcon = new L.Icon({
   iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
   iconSize: [25, 41],
@@ -30,7 +30,7 @@ export default function MapsAndNotifications() {
   const [bins, setBins] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch bins from backend
+  // Fetch bins from backend
   const fetchBins = async () => {
     try {
       const response = await fetch('http://localhost:5000/bins'); // 👈 Replace 'localhost' with your IP if using Expo Go
@@ -42,7 +42,7 @@ export default function MapsAndNotifications() {
       setBins(validBins);
       setLoading(false);
     } catch (error) {
-      console.error('❌ Error fetching bins:', error.message);
+      console.error('Error fetching bins:', error.message);
       setBins([]);
       setLoading(false);
     }
@@ -54,7 +54,7 @@ export default function MapsAndNotifications() {
     return () => clearInterval(interval);
   }, []);
 
-  // ✅ Notify in console when bins are full
+  // Notify in console when bins are full
   useEffect(() => {
     const fullBins = bins.filter(bin => bin.status?.toLowerCase() === 'full');
     if (fullBins.length > 0) {
@@ -62,7 +62,7 @@ export default function MapsAndNotifications() {
     }
   }, [bins]);
 
-  // ✅ Helper: choose icon color based on status
+  // Helper: choose icon color based on status
   const getIconByStatus = (status) => {
     switch (status?.toLowerCase()) {
       case 'full':
