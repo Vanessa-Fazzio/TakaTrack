@@ -1,0 +1,7 @@
+{
+  "bins": [
+    { "id": 1, "lat": -1.2921, "lng": 36.8219, "status": "Full", "area": "CBD" },
+    { "id": 2, "lat": -1.2854, "lng": 36.8252, "status": "Empty", "area": "Upper Hill" },
+    { "id": 3, "lat": -1.3000, "lng": 36.8167, "status": "Pending", "area": "Westlands" }
+  ]
+}
