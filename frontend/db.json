@@ -1,7 +1,19 @@
 {
   "bins": [
-    { "id": 1, "lat": -1.2921, "lng": 36.8219, "status": "Full", "area": "CBD" },
-    { "id": 2, "lat": -1.2854, "lng": 36.8252, "status": "Empty", "area": "Upper Hill" },
-    { "id": 3, "lat": -1.3000, "lng": 36.8167, "status": "Pending", "area": "Westlands" }
+    { "id": 1, "lat": -1.2921, "lng": 36.8219, "status": "Full", "area": "City Center" },
+    { "id": 2, "lat": -1.3000, "lng": 36.8150, "status": "Empty", "area": "West Nairobi" },
+    { "id": 3, "lat": -1.2850, "lng": 36.8300, "status": "Pending", "area": "East Nairobi" },
+    { "id": 4, "lat": -1.3100, "lng": 36.8250, "status": "Full", "area": "South Nairobi" },
+    { "id": 5, "lat": -1.2800, "lng": 36.8100, "status": "Empty", "area": "North Nairobi" },
+    { "id": 6, "lat": -1.2950, "lng": 36.8350, "status": "Full", "area": "Kilimani" },
+    { "id": 7, "lat": -1.2980, "lng": 36.8280, "status": "Empty", "area": "Parklands" },
+    { "id": 8, "lat": -1.2830, "lng": 36.8180, "status": "Pending", "area": "Westlands" },
+    { "id": 9, "lat": -1.3070, "lng": 36.8190, "status": "Full", "area": "South B" },
+    { "id": 10, "lat": -1.2900, "lng": 36.8100, "status": "Empty", "area": "Gigiri" },
+    { "id": 11, "lat": -1.3050, "lng": 36.8320, "status": "Pending", "area": "Kileleshwa" },
+    { "id": 12, "lat": -1.2880, "lng": 36.8250, "status": "Full", "area": "Lavington" },
+    { "id": 13, "lat": -1.3005, "lng": 36.8205, "status": "Empty", "area": "Ngara" },
+    { "id": 14, "lat": -1.2825, "lng": 36.8155, "status": "Pending", "area": "Hurlingham" },
+    { "id": 15, "lat": -1.3105, "lng": 36.8305, "status": "Full", "area": "South C" }
   ]
 }
