@@ -4,17 +4,18 @@ from flask_bcrypt import Bcrypt
 from flask_restful import Api, Resource
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from datetime import timedelta
+from datetime import datetime, timedelta
 from flask_jwt_extended import JWTManager
 from flask_socketio import SocketIO, emit
-from model import CollectionPoint, Collector, db
 from flask_mail import Mail, Message
+from flask_apscheduler import APScheduler
 from dotenv import load_dotenv
 import os
+from model import CollectionPoint, Collector, CollectionSchedule, db
+
+
 load_dotenv()
-
 app = Flask(__name__)
-
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///TakaTrack.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -36,6 +37,9 @@ api = Api(app)
 jwt = JWTManager(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 mail = Mail(app)
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
 
 
 @app.route('/send')
@@ -50,11 +54,43 @@ def send():
     return "Email sent successfully!"
 
 
+def assign_collection_days():
+    points = CollectionPoint.query.all()
+    today = datetime.now()
+
+    for p in points:
+        next_date = today + timedelta(days=3)
+        existing_schedule = CollectionSchedule.query.filter_by(
+            point_id=p.id,
+            collection_date=next_date.date()
+        ).first()
+
+        if not existing_schedule:
+            schedule = CollectionSchedule(point_id=p.id, collection_date=next_date)
+            db.session.add(schedule)
+            db.session.commit()
+
+            socketio.emit("new_schedule", schedule.serialize())
+
+    print("Automated collection schedules updated.")
+
+
+@scheduler.task('cron', id='auto_schedule', hour=0)
+def daily_schedule_task():
+    with app.app_context():
+        assign_collection_days()
+
+
+@app.route("/assign_days", methods=["POST"])
+def assign_days():
+    assign_collection_days()
+    return jsonify({"message": "Collection days assigned successfully"}), 200
+
+
 class CollectionPointsResource(Resource):
     def get(self):
         points = CollectionPoint.query.all()
-        points_dict = [p.serialize() for p in points]
-        return jsonify(points_dict)
+        return jsonify([p.serialize() for p in points])
 
     def post(self):
         data = request.get_json()
@@ -68,9 +104,11 @@ class CollectionPointsResource(Resource):
         new_point = CollectionPoint(name=name, latitude=latitude, longitude=longitude)
         db.session.add(new_point)
         db.session.commit()
+
+        
+        assign_collection_days()
+
         return new_point.serialize(), 201
-
-
 
 class CollectorResource(Resource):
     def get(self):
@@ -91,28 +129,27 @@ class CollectorResource(Resource):
         if collector:
             collector.latitude = latitude
             collector.longitude = longitude
+            collector.last_updated = datetime.utcnow()
         else:
             collector = Collector(latitude=latitude, longitude=longitude)
             db.session.add(collector)
         db.session.commit()
 
-        # Broadcast new location to all connected clients
-        socketio.emit("collector_update", collector.serialize(), broadcast=True)
+        
+        socketio.emit("collector_update", collector.serialize)
 
         return {
             "message": "Collector location updated",
             "data": collector.serialize()
         }, 200
 
-
-
+#
 @socketio.on("connect")
 def handle_connect():
     print("Client connected")
     collector = Collector.query.first()
     if collector:
         emit("collector_update", collector.serialize())
-
 
 @socketio.on("disconnect")
 def handle_disconnect():
@@ -121,6 +158,7 @@ def handle_disconnect():
 
 api.add_resource(CollectionPointsResource, "/collection_points")
 api.add_resource(CollectorResource, "/collector")
+
 
 if __name__ == "__main__":
     socketio.run(app, debug=True, host="0.0.0.0", port=5555)

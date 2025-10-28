@@ -15,6 +15,7 @@ sqlalchemy-serializer = "*"
 flask-mail = "*"
 load-dotenv = "*"
 dotenv = "*"
+flask-apscheduler = "*"
 
 [dev-packages]
 
