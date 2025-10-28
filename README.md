@@ -35,10 +35,11 @@ The platform automates key processes such as *scheduling, **GPS tracking, **noti
 
 | Name | Role | Responsibilities |
 |------|------|------------------|
-| *Vanessa Fazzio* | 🖥️ Frontend Developer 1 – Dashboard & User Interface | Builds core web UI, integrates APIs, manages authentication |
+| *Vanessa Fazzio* | 🖥️ Frontend Developer 1B: Logic & Integration |  Data handling and user authentication
 | *Christian Michael* | 🗺️ Frontend Developer 2 – Maps & Notifications | Adds interactive map features, notifications, and UX improvements |
 | *Randy Wanyoike* | 🧩 Backend Developer 1 – Core System & Database | Builds data models, CRUD APIs, and manages database logic |
 | *Feysal Dahir* | ⚙️ Backend Developer 2 – Features & Integrations | Implements GPS tracking, scheduling automation, and notifications |
+| * Josiah Brown*| Frontend Developer 1A: UI & Layouts  |  Visual design and page structure | 
 
 ---
 
